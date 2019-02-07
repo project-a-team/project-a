@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 [CreateAssetMenu]
 public class Location : ScriptableObject {
@@ -18,20 +19,28 @@ public class Location : ScriptableObject {
 	[SerializeField] private List<Room> roomList;
 
 	/// <summary>
-	/// Returns the rooms as a 3D array, creating it from the list if needed
+	/// Contains the rooms as a 3D array
 	/// </summary>
-	private Room[,,] RoomGrid => roomGrid ?? GenerateRoomGrid();
-
 	private Room[,,] roomGrid;
 
-	public Room GetRoom(Vector3Int position) => RoomGrid[position.x, position.y, position.z];
+	private Vector3Int roomGridSize;
+
+	/// <summary>
+	/// Returns the room at the specified position. Returns null if out of bounds or no room present.
+	/// </summary>
+	public Room GetRoom(Vector3Int position) =>
+		position.x < 0 || position.x >= roomGridSize.x ||
+		position.y < 0 || position.y >= roomGridSize.y ||
+		position.z < 0 || position.z >= roomGridSize.z
+			? null
+			: roomGrid[position.x, position.y, position.z];
 
 
 	/// <summary>
 	/// Generates a room grid from the room list for easier access.
 	/// </summary>
 	/// <returns></returns>
-	private Room[,,] GenerateRoomGrid() {
+	public void GenerateRoomGrid() {
 		// First, determine the grid size by getting the max room position 
 		var maxX = 0;
 		var maxY = 0;
@@ -43,14 +52,14 @@ public class Location : ScriptableObject {
 			maxZ = Mathf.Max(maxZ, room.GridPosition.z);
 		}
 
+		roomGridSize = new Vector3Int(maxX + 1, maxY + 1, maxZ + 1);
+
 		roomGrid = new Room[maxX + 1, maxY + 1, maxZ + 1];
 
 		foreach (var room in roomList) {
 			roomGrid[room.GridPosition.x, room.GridPosition.y, room.GridPosition.z] = room;
 			room.Location = this;
 		}
-
-		return roomGrid;
 	}
 
 	public override string ToString() => Name;

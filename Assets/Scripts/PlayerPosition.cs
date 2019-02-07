@@ -18,7 +18,8 @@ public class PlayerPosition : MonoBehaviour {
 		onMove.Invoke();
 	}
 
-	public void SetLocation(Location newLocation) {
+	private void SetLocation(Location newLocation) {
+		newLocation.GenerateRoomGrid();
 		Location = newLocation;
 		Position = Location.StartingPosition;
 	}
@@ -26,7 +27,7 @@ public class PlayerPosition : MonoBehaviour {
 	public void Move(int dir) {
 		var direction = (Direction) dir;
 
-		if (Room.GetOpen(direction)) {
+		if (Room.GetNeighbor(direction) != null) {
 			Position += direction.Vector();
 
 			onMove.Invoke();

@@ -16,3 +16,6 @@ MonoBehaviour:
   roomList:
   - {fileID: 11400000, guid: ad0e3f84f7accfa4488e1f4bebc14aa4, type: 2}
   - {fileID: 11400000, guid: b52a2437c4d171f42b9d96f6777a9f3a, type: 2}
+  - {fileID: 11400000, guid: de037130ef2e38e4e87c10249602ed36, type: 2}
+  - {fileID: 11400000, guid: ce4ce460f7bb0714797fd60bdf4cafc2, type: 2}
+  - {fileID: 11400000, guid: 05e28ca821d1a3c44a450428207ae4c5, type: 2}
