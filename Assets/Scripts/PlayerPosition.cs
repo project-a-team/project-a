@@ -2,6 +2,8 @@
 using UnityEngine.Events;
 
 public class PlayerPosition : MonoBehaviour {
+	[SerializeField] private Location startLocation;
+
 	public Location Location { get; private set; }
 	public Vector3Int Position { get; private set; }
 	public Room Room => Location.GetRoom(Position);
@@ -12,13 +14,13 @@ public class PlayerPosition : MonoBehaviour {
 	public UnityEvent onMove;
 
 	private void Start() {
-		SetLocation(Location.Vault());
+		SetLocation(startLocation);
 		onMove.Invoke();
 	}
 
 	public void SetLocation(Location newLocation) {
 		Location = newLocation;
-		Position = Location.StartingRoom;
+		Position = Location.StartingPosition;
 	}
 
 	public void Move(int dir) {

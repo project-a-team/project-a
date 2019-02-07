@@ -1,39 +1,56 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class Location {
-	public string Name { get; }
-
-	/// <summary>
-	/// A 3D array of rooms in the format [width, length, floor].
-	/// </summary>
-	private readonly Room[,,] rooms;
-
-	public Vector3Int StartingRoom { get; }
-
-	public Location(string name, Vector3Int gridSize, Vector3Int startingRoom) {
-		Name = name;
-		StartingRoom = startingRoom;
-		rooms = new Room[gridSize.x, gridSize.y, gridSize.z];
-	}
-
-	public Room GetRoom(Vector3Int position) => rooms[position.x, position.y, position.z];
-
-	public void AddRoom(Vector3Int position, string name, bool[] openDirections) =>
-		rooms[position.x, position.y, position.z] = new Room(this, position, name, openDirections);
-
+[CreateAssetMenu]
+public class Location : ScriptableObject {
+	public string Name => name;
 
 	/// <summary>
-	/// Hardcoded test location
+	/// The initial position of the player when entering this location
 	/// </summary>
-	public static Location Vault() {
-		var startingPosition = new Vector3Int(1, 0, 0);
-		var vault = new Location("Vault", new Vector3Int(3, 3, 2), startingPosition);
+	[SerializeField] private Vector3Int startingPosition;
 
-		vault.AddRoom(startingPosition, "Lobby", new[] {true, false, false, false});
-		vault.AddRoom(new Vector3Int(1, 1, 0), "Corridor", new[] {false, false, true, true});
-		vault.AddRoom(new Vector3Int(0, 1, 0), "Stairs", new[] {false, true, false, false});
+	public Vector3Int StartingPosition => startingPosition;
 
-		return vault;
+	/// <summary>
+	/// List of rooms for this location, to be set from the inspector
+	/// </summary>
+	[SerializeField] private List<Room> roomList;
+
+	/// <summary>
+	/// Returns the rooms as a 3D array, creating it from the list if needed
+	/// </summary>
+	private Room[,,] RoomGrid => roomGrid ?? GenerateRoomGrid();
+
+	private Room[,,] roomGrid;
+
+	public Room GetRoom(Vector3Int position) => RoomGrid[position.x, position.y, position.z];
+
+
+	/// <summary>
+	/// Generates a room grid from the room list for easier access.
+	/// </summary>
+	/// <returns></returns>
+	private Room[,,] GenerateRoomGrid() {
+		// First, determine the grid size by getting the max room position 
+		var maxX = 0;
+		var maxY = 0;
+		var maxZ = 0;
+
+		foreach (var room in roomList) {
+			maxX = Mathf.Max(maxX, room.GridPosition.x);
+			maxY = Mathf.Max(maxY, room.GridPosition.y);
+			maxZ = Mathf.Max(maxZ, room.GridPosition.z);
+		}
+
+		roomGrid = new Room[maxX + 1, maxY + 1, maxZ + 1];
+
+		foreach (var room in roomList) {
+			roomGrid[room.GridPosition.x, room.GridPosition.y, room.GridPosition.z] = room;
+			room.Location = this;
+		}
+
+		return roomGrid;
 	}
 
 	public override string ToString() => Name;

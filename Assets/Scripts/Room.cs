@@ -1,27 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class Room {
-	public string Name { get; }
+[CreateAssetMenu]
+public class Room : ScriptableObject {
+	public string Name => name;
 
-	public Location Location { get; }
+	public Location Location { get; set; }
 
-	public Vector3Int Position { get; }
+	[SerializeField] private Vector3Int gridPosition;
+	public Vector3Int GridPosition => gridPosition;
 
-	private readonly bool[] openDirections;
+	[SerializeField] private bool northOpen, eastOpen, southOpen, westOpen;
 
-	public Room(Location location, Vector3Int position, string name, bool[] openDirections) {
-		Location = location;
-		Position = position;
-		Name = name;
-		this.openDirections = openDirections;
+	[SerializeField] private RoomEvent roomEvent;
+	[SerializeField] private TextAsset description;
+
+	public bool GetOpen(Direction direction) {
+		switch (direction) {
+			case Direction.North:
+				return northOpen;
+			case Direction.East:
+				return eastOpen;
+			case Direction.South:
+				return southOpen;
+			case Direction.West:
+				return westOpen;
+			default:
+				throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+		}
 	}
 
-	public bool GetOpen(Direction direction) => openDirections[(int) direction];
-
-	public void SetOpen(Direction direction, bool open) => openDirections[(int) direction] = open;
-
 	public Room GetNeighbor(Direction direction) => GetOpen(direction)
-		? Location.GetRoom(Position + direction.Vector())
+		? Location.GetRoom(GridPosition + direction.Vector())
 		: null;
 
 	public override string ToString() => Name;
