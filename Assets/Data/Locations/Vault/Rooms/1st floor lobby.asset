@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 892e8be36684a7246a68fdfaa7401c7e, type: 3}
-  m_Name: Lobby
+  m_Name: 1st floor lobby
   m_EditorClassIdentifier: 
-  gridPosition: {x: 1, y: 1, z: 0}
-  northOpen: 1
+  gridPosition: {x: 1, y: 1, z: 1}
+  northOpen: 0
   eastOpen: 0
-  southOpen: 1
+  southOpen: 0
   westOpen: 1
   roomEvent: {fileID: 0}
   roomConnections: []

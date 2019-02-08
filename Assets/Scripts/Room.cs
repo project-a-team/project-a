@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -13,6 +14,10 @@ public class Room : ScriptableObject {
 	[SerializeField] private bool northOpen, eastOpen, southOpen, westOpen;
 
 	[SerializeField] private RoomEvent roomEvent;
+
+	[SerializeField] private List<RoomConnection> roomConnections;
+	public IEnumerable<RoomConnection> RoomConnections => roomConnections.AsReadOnly();
+
 	[SerializeField] private TextAsset description;
 
 	public bool GetOpen(Direction direction) {
@@ -31,7 +36,7 @@ public class Room : ScriptableObject {
 	}
 
 	public Room GetNeighbor(Direction direction) => GetOpen(direction)
-		? Location.GetRoom(GridPosition + direction.Vector())
+		? Location.GetRoom(GridPosition + direction.ToVector())
 		: null;
 
 	public override string ToString() => Name;

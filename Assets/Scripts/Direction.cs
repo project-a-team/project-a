@@ -11,7 +11,7 @@ public enum Direction {
 }
 
 public static class DirectionExtension {
-	public static Vector3Int Vector(this Direction direction) {
+	public static Vector3Int ToVector(this Direction direction) {
 		switch (direction) {
 			case Direction.North:
 				return Vector3Int.up;

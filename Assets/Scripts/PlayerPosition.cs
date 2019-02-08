@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerPosition : MonoBehaviour {
@@ -28,9 +29,25 @@ public class PlayerPosition : MonoBehaviour {
 		var direction = (Direction) dir;
 
 		if (Room.GetNeighbor(direction) != null) {
-			Position += direction.Vector();
+			MoveToPosition(Position + direction.ToVector());
+		}
+	}
 
-			onMove.Invoke();
+	private void MoveToPosition(Vector3Int targetPosition) {
+		Position = targetPosition;
+		onMove.Invoke();
+	}
+
+	public void TakeConnection(RoomConnection connection) {
+		switch (connection.type) {
+			case RoomConnection.Type.Relative:
+				MoveToPosition(Position + connection.target);
+				break;
+			case RoomConnection.Type.Absolute:
+				MoveToPosition(connection.target);
+				break;
+			default:
+				throw new ArgumentOutOfRangeException();
 		}
 	}
 }

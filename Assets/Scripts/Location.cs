@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 [CreateAssetMenu]
 public class Location : ScriptableObject {

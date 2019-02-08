@@ -18,4 +18,5 @@ MonoBehaviour:
   southOpen: 1
   westOpen: 0
   roomEvent: {fileID: 0}
+  roomConnections: []
   description: {fileID: 0}
