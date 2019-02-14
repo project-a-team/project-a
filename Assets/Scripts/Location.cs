@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -21,6 +22,14 @@ public class Location : ScriptableObject {
 	/// Contains the rooms as a 3D array
 	/// </summary>
 	private Room[,,] roomGrid;
+
+	/// <summary>
+	/// Returns all the rooms on the matching floor
+	/// </summary>
+	public IEnumerable<Room> Floor(int floor) =>
+		from Room room in roomGrid
+		where room != null && room.GridPosition.z == floor
+		select room;
 
 	private Vector3Int roomGridSize;
 

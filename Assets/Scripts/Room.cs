@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu]
 public class Room : ScriptableObject {
@@ -17,6 +18,9 @@ public class Room : ScriptableObject {
 
 	[SerializeField] private List<RoomConnection> roomConnections;
 	public IEnumerable<RoomConnection> RoomConnections => roomConnections.AsReadOnly();
+
+	[SerializeField] private Sprite sprite;
+	public Sprite Sprite => sprite;
 
 	[SerializeField] private TextAsset description;
 

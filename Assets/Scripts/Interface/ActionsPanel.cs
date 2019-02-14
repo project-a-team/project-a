@@ -1,29 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class PositionPanel : MonoBehaviour {
-	[SerializeField] private Text text;
+public class ActionsPanel : MonoBehaviour {
 	[SerializeField] private PlayerPosition playerPosition;
+
 	[SerializeField] private RectTransform actionsPanel;
 	[SerializeField] private Button actionButton;
 
-	public void OnPlayerMoved() {
-		// Set text about the current position
-		var positionText = $"{playerPosition.Position}\n";
+	private void Awake() {
+		playerPosition.onPlayerMoved += OnPlayerMoved;
+	}
 
-		if (playerPosition.Room != null) {
-			positionText += $"{playerPosition.Room}\n\n";
-
-			foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West}) {
-				var neighbor = playerPosition.Room.GetNeighbor(direction);
-				if (neighbor != null) {
-					positionText += $"{direction}: {neighbor}\n";
-				}
-			}
-		}
-
-		text.text = positionText;
-
+	private void OnPlayerMoved() {
 		// Clear action panel
 		foreach (Transform child in actionsPanel) {
 			Destroy(child.gameObject);

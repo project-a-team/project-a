@@ -9,20 +9,18 @@ public class PlayerPosition : MonoBehaviour {
 	public Vector3Int Position { get; private set; }
 	public Room Room => Location.GetRoom(Position);
 
-	/// <summary>
-	/// An event called after the player moved.
-	/// </summary>
-	public UnityEvent onMove;
+	public Action onPlayerMoved, onLocationChanged;
 
 	private void Start() {
 		SetLocation(startLocation);
-		onMove.Invoke();
 	}
 
 	private void SetLocation(Location newLocation) {
 		newLocation.GenerateRoomGrid();
 		Location = newLocation;
-		Position = Location.StartingPosition;
+		onLocationChanged?.Invoke();
+
+		MoveToPosition(Location.StartingPosition);
 	}
 
 	public void Move(int dir) {
@@ -35,7 +33,7 @@ public class PlayerPosition : MonoBehaviour {
 
 	private void MoveToPosition(Vector3Int targetPosition) {
 		Position = targetPosition;
-		onMove.Invoke();
+		onPlayerMoved?.Invoke();
 	}
 
 	public void TakeConnection(RoomConnection connection) {
