@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892e8be36684a7246a68fdfaa7401c7e, type: 3}
   m_Name: Corridor 1
   m_EditorClassIdentifier: 
-  gridPosition: {x: 1, y: 2, z: 0}
+  gridPosition: {x: 0, y: 1, z: 0}
   northOpen: 0
   eastOpen: 1
   southOpen: 1
   westOpen: 0
   roomEvent: {fileID: 0}
   roomConnections: []
+  sprite: {fileID: 0}
   description: {fileID: 0}

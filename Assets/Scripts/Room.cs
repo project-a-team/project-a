@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class Room : ScriptableObject {
 	public string Name => name;
 
-	public Location Location { get; set; }
-
 	[SerializeField] private Vector3Int gridPosition;
 	public Vector3Int GridPosition => gridPosition;
 
@@ -38,10 +36,6 @@ public class Room : ScriptableObject {
 				throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
 		}
 	}
-
-	public Room GetNeighbor(Direction direction) => GetOpen(direction)
-		? Location.GetRoom(GridPosition + direction.ToVector())
-		: null;
 
 	public override string ToString() => Name;
 }

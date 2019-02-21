@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -19,16 +20,11 @@ public class Location : ScriptableObject {
 	[SerializeField] private List<Room> roomList;
 
 	/// <summary>
-	/// Contains the rooms as a 3D array
-	/// </summary>
-	private Room[,,] roomGrid;
-
-	/// <summary>
 	/// Returns all the rooms on the matching floor
 	/// </summary>
 	public IEnumerable<Room> Floor(int floor) =>
-		from Room room in roomGrid
-		where room != null && room.GridPosition.z == floor
+		from Room room in roomList
+		where room.GridPosition.z == floor
 		select room;
 
 	private Vector3Int roomGridSize;
@@ -36,39 +32,7 @@ public class Location : ScriptableObject {
 	/// <summary>
 	/// Returns the room at the specified position. Returns null if out of bounds or no room present.
 	/// </summary>
-	public Room GetRoom(Vector3Int position) =>
-		position.x < 0 || position.x >= roomGridSize.x ||
-		position.y < 0 || position.y >= roomGridSize.y ||
-		position.z < 0 || position.z >= roomGridSize.z
-			? null
-			: roomGrid[position.x, position.y, position.z];
-
-
-	/// <summary>
-	/// Generates a room grid from the room list for easier access.
-	/// </summary>
-	/// <returns></returns>
-	public void GenerateRoomGrid() {
-		// First, determine the grid size by getting the max room position 
-		var maxX = 0;
-		var maxY = 0;
-		var maxZ = 0;
-
-		foreach (var room in roomList) {
-			maxX = Mathf.Max(maxX, room.GridPosition.x);
-			maxY = Mathf.Max(maxY, room.GridPosition.y);
-			maxZ = Mathf.Max(maxZ, room.GridPosition.z);
-		}
-
-		roomGridSize = new Vector3Int(maxX + 1, maxY + 1, maxZ + 1);
-
-		roomGrid = new Room[maxX + 1, maxY + 1, maxZ + 1];
-
-		foreach (var room in roomList) {
-			roomGrid[room.GridPosition.x, room.GridPosition.y, room.GridPosition.z] = room;
-			room.Location = this;
-		}
-	}
+	public Room GetRoom(Vector3Int position) => roomList.Find(room => room.GridPosition == position);
 
 	public override string ToString() => Name;
 }

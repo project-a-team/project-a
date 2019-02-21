@@ -44,13 +44,17 @@ public class MiniMap : MonoBehaviour {
 		// Draw player position
 		var player = Instantiate(playerTokenPrefab, GetMapPosition(playerPosition.Position), Quaternion.identity);
 		player.SetParent(miniMapParent, false);
+
+		// Apply offset (needed due to negative coordinates)
+		foreach (Transform child in miniMapParent) {
+			child.localPosition += new Vector3(-minX * roomPrefab.GridSize.x, -minY * roomPrefab.GridSize.y);
+		}
 	}
 
 	private Vector3 GetMapPosition(Vector3Int gridPosition) {
 		return new Vector3(
 			(gridPosition.x + .5f) * roomPrefab.GridSize.x,
-			(gridPosition.y + .5f) * roomPrefab.GridSize.y,
-			0
+			(gridPosition.y + .5f) * roomPrefab.GridSize.y
 		);
 	}
 }

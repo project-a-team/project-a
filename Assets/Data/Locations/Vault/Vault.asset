@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc9f3d68759645418050e5a70538274, type: 3}
   m_Name: Vault
   m_EditorClassIdentifier: 
-  startingPosition: {x: 1, y: 0, z: 0}
+  startingPosition: {x: 0, y: -1, z: 0}
   roomList:
   - {fileID: 11400000, guid: ad0e3f84f7accfa4488e1f4bebc14aa4, type: 2}
   - {fileID: 11400000, guid: b52a2437c4d171f42b9d96f6777a9f3a, type: 2}

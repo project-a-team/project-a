@@ -16,7 +16,6 @@ public class PlayerPosition : MonoBehaviour {
 	}
 
 	private void SetLocation(Location newLocation) {
-		newLocation.GenerateRoomGrid();
 		Location = newLocation;
 		onLocationChanged?.Invoke();
 
@@ -24,10 +23,10 @@ public class PlayerPosition : MonoBehaviour {
 	}
 
 	public void Move(int dir) {
-		var direction = (Direction) dir;
+		var targetPosition = Position + ((Direction) dir).ToVector();
 
-		if (Room.GetNeighbor(direction) != null) {
-			MoveToPosition(Position + direction.ToVector());
+		if (Location.GetRoom(targetPosition) != null) {
+			MoveToPosition(targetPosition);
 		}
 	}
 

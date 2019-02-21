@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 892e8be36684a7246a68fdfaa7401c7e, type: 3}
   m_Name: Storage
   m_EditorClassIdentifier: 
-  gridPosition: {x: 2, y: 1, z: 0}
+  gridPosition: {x: 1, y: 0, z: 0}
   northOpen: 1
   eastOpen: 0
   southOpen: 0
   westOpen: 0
   roomEvent: {fileID: 0}
+  roomConnections: []
+  sprite: {fileID: 0}
   description: {fileID: 0}
