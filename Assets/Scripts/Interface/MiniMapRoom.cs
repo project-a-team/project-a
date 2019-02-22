@@ -14,9 +14,9 @@ public class MiniMapRoom : MonoBehaviour {
 
 		image.sprite = room.Sprite;
 
-		northDoor.SetActive(room.GetOpen(Direction.North));
-		eastDoor.SetActive(room.GetOpen(Direction.East));
-		southDoor.SetActive(room.GetOpen(Direction.South));
-		westDoor.SetActive(room.GetOpen(Direction.West));
+		northDoor.SetActive(room.IsOpen(Direction.North));
+		eastDoor.SetActive(room.IsOpen(Direction.East));
+		southDoor.SetActive(room.IsOpen(Direction.South));
+		westDoor.SetActive(room.IsOpen(Direction.West));
 	}
 }

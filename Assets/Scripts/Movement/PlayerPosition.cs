@@ -23,9 +23,10 @@ public class PlayerPosition : MonoBehaviour {
 	}
 
 	public void Move(int dir) {
-		var targetPosition = Position + ((Direction) dir).ToVector();
+		var direction = (Direction) dir;
+		var targetPosition = Position + direction.ToVector();
 
-		if (Location.GetRoom(targetPosition) != null) {
+		if (Room.IsOpen(direction) && Location.GetRoom(targetPosition) != null) {
 			MoveToPosition(targetPosition);
 		}
 	}

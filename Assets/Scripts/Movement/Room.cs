@@ -22,7 +22,7 @@ public class Room : ScriptableObject {
 
 	[SerializeField] private TextAsset description;
 
-	public bool GetOpen(Direction direction) {
+	public bool IsOpen(Direction direction) {
 		switch (direction) {
 			case Direction.North:
 				return northOpen;
