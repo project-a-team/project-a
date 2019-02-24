@@ -1,8 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class PlayerPosition : MonoBehaviour {
+	[SerializeField] private ActionPanel actionPanel;
 	[SerializeField] private Location startLocation;
 
 	public Location Location { get; private set; }
@@ -33,10 +35,16 @@ public class PlayerPosition : MonoBehaviour {
 
 	private void MoveToPosition(Vector3Int targetPosition) {
 		Position = targetPosition;
+
+		actionPanel.ClearActions();
+		foreach (var connection in Room.RoomConnections) {
+			actionPanel.AddAction(connection.Name, delegate { TakeConnection(connection); });
+		}
+
 		onPlayerMoved?.Invoke();
 	}
 
-	public void TakeConnection(RoomConnection connection) {
+	private void TakeConnection(RoomConnection connection) {
 		switch (connection.type) {
 			case RoomConnection.Type.Relative:
 				MoveToPosition(Position + connection.target);
