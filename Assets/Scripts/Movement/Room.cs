@@ -1,41 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu]
 public class Room : ScriptableObject {
-	public string Name => name;
+	[SerializeField] private string roomName;
+	public string Name => roomName;
 
-	[SerializeField] private Vector3Int gridPosition;
-	public Vector3Int GridPosition => gridPosition;
-
-	[SerializeField] private bool northOpen, eastOpen, southOpen, westOpen;
-
-	[SerializeField] private RoomEvent roomEvent;
-
-	[SerializeField] private List<RoomConnection> roomConnections;
-	public IEnumerable<RoomConnection> RoomConnections => roomConnections.AsReadOnly();
+	[SerializeField] private Rect position;
 
 	[SerializeField] private Sprite sprite;
 	public Sprite Sprite => sprite;
 
-	[SerializeField] private TextAsset description;
 
-	public bool IsOpen(Direction direction) {
-		switch (direction) {
-			case Direction.North:
-				return northOpen;
-			case Direction.East:
-				return eastOpen;
-			case Direction.South:
-				return southOpen;
-			case Direction.West:
-				return westOpen;
-			default:
-				throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-		}
-	}
+	[SerializeField] private List<Room> neighbors;
+	public IEnumerable<Room> Neighbors => neighbors;
 
 	public override string ToString() => Name;
 }

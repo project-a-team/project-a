@@ -5,55 +5,38 @@ using UnityEngine.Serialization;
 
 public class PlayerPosition : MonoBehaviour {
 	[SerializeField] private ActionPanel actionPanel;
-	[SerializeField] private Location startLocation;
+	[SerializeField] private Location startingLocation;
 
 	public Location Location { get; private set; }
-	public Vector3Int Position { get; private set; }
-	public Room Room => Location.GetRoom(Position);
+	public Room Room { get; private set; }
 
-	public Action onPlayerMoved, onLocationChanged;
+	public Action onRoomChanged, onLocationChanged;
 
 	private void Start() {
-		SetLocation(startLocation);
+		SetLocation(startingLocation);
 	}
 
 	private void SetLocation(Location newLocation) {
 		Location = newLocation;
 		onLocationChanged?.Invoke();
 
-		MoveToPosition(Location.StartingPosition);
+		SetRoom(Location.StartingRoom);
 	}
 
-	public void Move(int dir) {
-		var direction = (Direction) dir;
-		var targetPosition = Position + direction.ToVector();
-
-		if (Room.IsOpen(direction) && Location.GetRoom(targetPosition) != null) {
-			MoveToPosition(targetPosition);
+	private void SetRoom(Room newRoom) {
+		if (newRoom == null) {
+			Debug.LogWarning("Attempted to move to null room from " + Room);
+			return;
 		}
-	}
 
-	private void MoveToPosition(Vector3Int targetPosition) {
-		Position = targetPosition;
+		Room = newRoom;
 
 		actionPanel.ClearActions();
-		foreach (var connection in Room.RoomConnections) {
-			actionPanel.AddAction(connection.Name, delegate { TakeConnection(connection); });
+		foreach (var neighbor in Room.Neighbors) {
+			if (neighbor == null) continue;
+			actionPanel.AddAction(neighbor.Name, delegate { SetRoom(neighbor); });
 		}
 
-		onPlayerMoved?.Invoke();
-	}
-
-	private void TakeConnection(RoomConnection connection) {
-		switch (connection.type) {
-			case RoomConnection.Type.Relative:
-				MoveToPosition(Position + connection.target);
-				break;
-			case RoomConnection.Type.Absolute:
-				MoveToPosition(connection.target);
-				break;
-			default:
-				throw new ArgumentOutOfRangeException();
-		}
+		onRoomChanged?.Invoke();
 	}
 }

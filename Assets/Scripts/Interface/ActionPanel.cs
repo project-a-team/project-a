@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -13,10 +12,15 @@ public class ActionPanel : MonoBehaviour {
 		}
 	}
 
-	public void AddAction(string name, UnityAction action, bool valid = true) {
+	public void AddAction(string actionName, UnityAction action, bool valid = true) {
 		var button = Instantiate(actionButton, actionsPanel);
 		button.onClick.AddListener(action);
-		button.GetComponentInChildren<Text>().text = name;
+		button.GetComponentInChildren<Text>().text = actionName;
 		button.interactable = valid;
+
+		var rectTransform = button.GetComponent<RectTransform>();
+		var pos = rectTransform.position;
+		pos.y -= rectTransform.sizeDelta.y * (actionsPanel.childCount - 1);
+		rectTransform.position = pos;
 	}
 }

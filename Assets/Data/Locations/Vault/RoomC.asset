@@ -9,15 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 892e8be36684a7246a68fdfaa7401c7e, type: 3}
-  m_Name: Corridor 2
+  m_Script: {fileID: 11500000, guid: 648b5b9de4f89f543ad9766b35745f3d, type: 3}
+  m_Name: RoomC
   m_EditorClassIdentifier: 
-  gridPosition: {x: 1, y: 1, z: 0}
-  northOpen: 0
-  eastOpen: 0
-  southOpen: 1
-  westOpen: 1
-  roomEvent: {fileID: 0}
-  roomConnections: []
+  roomName: Room C
+  position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
   sprite: {fileID: 0}
-  description: {fileID: 0}
+  neighbors:
+  - {fileID: 11400000, guid: 4a6d78d53ef1ece478e7de449fb44b7a, type: 2}
