@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu]
 public class Location : ScriptableObject {
-	[SerializeField] private string locationName;
-	public string Name => locationName;
+	[field: SerializeField] public string Name { get; }
 
-	[SerializeField] private Room startingRoom;
-	public Room StartingRoom => startingRoom;
+	[field: SerializeField] public Room StartingRoom { get; }
 
-	public override string ToString() => Name;
+	public override string ToString() {
+		return Name;
+	}
 }

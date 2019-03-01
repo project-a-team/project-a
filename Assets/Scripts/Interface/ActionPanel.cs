@@ -3,24 +3,35 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ActionPanel : MonoBehaviour {
-	[SerializeField] private RectTransform actionsPanel;
 	[SerializeField] private Button actionButton;
+	[SerializeField] private RectTransform actionsPanel;
 
-	public void ClearActions() {
-		foreach (Transform child in actionsPanel) {
-			Destroy(child.gameObject);
+	private float buttonHeight;
+	[SerializeField] private PlayerPosition playerPosition;
+
+	private void Awake() {
+		playerPosition.onRoomChanged += OnRoomChanged;
+		buttonHeight = actionButton.GetComponent<RectTransform>().rect.height;
+	}
+
+	private void OnRoomChanged() {
+		foreach (Transform child in actionsPanel) Destroy(child.gameObject);
+
+		var offset = 0f;
+		foreach (var room in playerPosition.Room.Neighbors) {
+			AddAction(room.Name, delegate { playerPosition.SetRoom(room); }, offset);
+			offset += buttonHeight;
 		}
 	}
 
-	public void AddAction(string actionName, UnityAction action, bool valid = true) {
+	private void AddAction(string name, UnityAction action, float offset) {
 		var button = Instantiate(actionButton, actionsPanel);
 		button.onClick.AddListener(action);
-		button.GetComponentInChildren<Text>().text = actionName;
-		button.interactable = valid;
+		button.GetComponentInChildren<Text>().text = name;
 
 		var rectTransform = button.GetComponent<RectTransform>();
-		var pos = rectTransform.position;
-		pos.y -= rectTransform.sizeDelta.y * (actionsPanel.childCount - 1);
-		rectTransform.position = pos;
+		var pos = rectTransform.localPosition;
+		pos.y -= offset;
+		rectTransform.localPosition = pos;
 	}
 }
