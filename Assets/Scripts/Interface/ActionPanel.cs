@@ -3,11 +3,11 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ActionPanel : MonoBehaviour {
+	[SerializeField] private PlayerPosition playerPosition;
 	[SerializeField] private Button actionButton;
 	[SerializeField] private RectTransform actionsPanel;
 
 	private float buttonHeight;
-	[SerializeField] private PlayerPosition playerPosition;
 
 	private void Awake() {
 		playerPosition.onRoomChanged += OnRoomChanged;
