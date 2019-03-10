@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Location/Room")]
 public class Room : ScriptableObject {
 	[SerializeField] private string roomName;
 	[SerializeField] private int floor;
