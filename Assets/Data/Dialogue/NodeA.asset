@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 647c20882f2016144818f63f8b1fefca, type: 3}
   m_Name: NodeA
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
+  text: {fileID: 4900000, guid: d293007375cca41448d864d35515049a, type: 3}
   choices:
   - {fileID: 11400000, guid: b6aa363fcef1e254da1d02820370abcb, type: 2}

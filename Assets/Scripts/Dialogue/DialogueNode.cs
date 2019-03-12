@@ -5,4 +5,6 @@ using UnityEngine;
 public class DialogueNode : ScriptableObject {
 	[SerializeField] private TextAsset text;
 	[SerializeField] private List<DialogueChoice> choices;
+
+	public string Text => text.text;
 }
