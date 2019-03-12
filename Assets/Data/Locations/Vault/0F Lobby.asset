@@ -10,16 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 648b5b9de4f89f543ad9766b35745f3d, type: 3}
-  m_Name: RoomA
+  m_Name: 0F Lobby
   m_EditorClassIdentifier: 
-  roomName: Room A
+  roomName: Lobby
   floor: 0
   position:
     serializedVersion: 2
-    x: -120
+    x: 0
     y: 0
     width: 100
-    height: 100
+    height: 200
   sprite: {fileID: 0}
+  text: 'You are in the vault''s <b>lobby</b>.
+
+
+    This text is not <i>that</i> much better, honestly.'
+  dialogue: {fileID: 11400000, guid: 76d7f3fb79beb4449812072110ed7fc5, type: 2}
   neighbors:
-  - {fileID: 11400000, guid: 4a6d78d53ef1ece478e7de449fb44b7a, type: 2}
+  - {fileID: 11400000, guid: c46ea001cd2441e49b230f4b254adffc, type: 2}
+  - {fileID: 11400000, guid: 77d096eddef4cea499ca6d55c627a64d, type: 2}

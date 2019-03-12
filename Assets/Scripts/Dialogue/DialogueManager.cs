@@ -12,15 +12,6 @@ public class DialogueManager : MonoBehaviour {
 	}
 
 	private void OnRoomChanged() {
-		SetDialogue(playerPosition.Room.Dialogue);
-	}
-
-	private void SetDialogue(DialogueNode dialogueNode) {
-		if (dialogueNode == null) {
-			mainText.text = "";
-			return;
-		}
-
-		mainText.text = dialogueNode.Text;
+		mainText.text = playerPosition.Room.Text;
 	}
 }

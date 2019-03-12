@@ -3,8 +3,8 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Dialogue/Dialogue Node")]
 public class DialogueNode : ScriptableObject {
-	[SerializeField] private TextAsset text;
+	[SerializeField, TextArea] private string text;
 	[SerializeField] private List<DialogueChoice> choices;
 
-	public string Text => text.text;
+	public string Text => text;
 }

@@ -7,14 +7,14 @@ public class Room : ScriptableObject {
 	[SerializeField] private int floor;
 	[SerializeField] private Rect position;
 	[SerializeField] private Sprite sprite;
-	[SerializeField] private DialogueNode dialogue;
+	[SerializeField, TextArea] private string text;
 	[SerializeField] private List<Room> neighbors;
 
 	public string Name => roomName;
 	public int Floor => floor;
 	public Rect Position => position;
 	public Sprite Sprite => sprite;
-	public DialogueNode Dialogue => dialogue;
+	public string Text => text;
 	public IEnumerable<Room> Neighbors => neighbors;
 
 	public override string ToString() => Name;

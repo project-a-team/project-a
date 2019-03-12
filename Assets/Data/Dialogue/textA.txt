@@ -1,2 +1,0 @@
-This is a <b>test</b>!
-Test can be formatted using <i>markdown</i> syntax.
